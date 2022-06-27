@@ -11,11 +11,13 @@ const Room = ({ roomName, room, handleLogout }: Props) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
+    /* Participant Connected */
     const participantConnected = (participant: any) => {
       // @ts-ignore
       setParticipants((prevParticipants) => [...prevParticipants, participant]);
     };
 
+    /* Participant disconnected */
     const participantDisconnected = (participant: any) => {
       setParticipants((prevParticipants) =>
         prevParticipants.filter((p) => p !== participant)
@@ -38,7 +40,7 @@ const Room = ({ roomName, room, handleLogout }: Props) => {
   return (
     <div className="room">
       <h2>Room: {roomName}</h2>
-      <button onClick={handleLogout}>Log out</button>
+      <button onClick={handleLogout}>End Call</button>
       <div className="local-participant">
         {room ? (
           <Participant

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 // @ts-ignore
 import Video from "twilio-video";
+import { baseUrl } from "../config/config";
 import Lobby from "./lobby";
 import Room from "./room";
 
 const VideoChat = () => {
   const [username, setUsername] = useState("");
   const [roomName, setRoomName] = useState("");
-  const [token, setToken] = useState(null);
   const [room, setRoom] = useState<any>(null);
   const [connecting, setConnecting] = useState(false);
 
@@ -28,7 +28,7 @@ const VideoChat = () => {
   const handleSubmit = useCallback(
     async (event: { preventDefault: () => void }) => {
       event.preventDefault();
-      const data = await fetch("http://localhost:5000/rooms/join-room", {
+      const data = await fetch(`${baseUrl}/rooms/join-room`, {
         method: "POST",
         body: JSON.stringify({
           roomName: roomName,
