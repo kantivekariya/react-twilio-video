@@ -20,6 +20,11 @@ const videoConstraints = {
   },
 };
 
+const audioConstraints = {
+  video: false,
+  audio: true,
+};
+
 const VideoChat = () => {
   const [username, setUsername] = useState("");
   const [roomName, setRoomName] = useState("");
@@ -52,12 +57,12 @@ const VideoChat = () => {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      connectRoom(accessToken.token, roomName)
+      connectVideoRoom(accessToken.token, roomName)
     },
     [username, roomName,]
   );
 
-  const connectRoom = useCallback((accessToken: string, roomName: string) => {
+  const connectVideoRoom = useCallback((accessToken: string, roomName: string) => {
     navigator.mediaDevices
       .getUserMedia(videoConstraints)
       .then(async (stream) => {
@@ -76,27 +81,47 @@ const VideoChat = () => {
           name: roomName,
           tracks,
         });
-        console.log("succesfully connected with twilio room");
         console.log(room);
         setRoom(room)
       })
       .catch((err) => {
-        toast.error(err.message);
+        connectAudioRoom(accessToken, roomName)
       });
 
-  }, [])
-
-  const handleLogout = useCallback(() => {
-    setRoom((prevRoom: { localParticipant: { tracks: { track: { stop: () => void; }; }[]; }; disconnect: () => void; }) => {
-      if (prevRoom) {
-        prevRoom.localParticipant.tracks.forEach((trackPub: { track: { stop: () => void; }; }) => {
-          trackPub.track.stop();
-        });
-        prevRoom.disconnect();
-      }
-      return null;
-    });
   }, []);
+
+  const connectAudioRoom = useCallback((accessToken: string, roomName: string) => {
+    navigator.mediaDevices
+      .getUserMedia(audioConstraints)
+      .then(async (stream) => {
+        let tracks;
+        // create data track for messages
+        const audioTrack = new LocalAudioTrack(stream.getAudioTracks()[0]);
+        const dataTrack = new LocalDataTrack();
+        // dataChannel = dataTrack;
+        tracks = [audioTrack, dataTrack];
+        const room = await connect(accessToken, {
+          name: roomName,
+          tracks,
+        });
+        console.log(room);
+        setRoom(room);
+        // store.dispatch(setShowOverlay(false));
+      })
+      .catch((err) => {
+        console.log("Error occurred when trying to get an access to local devices");
+        console.log(err);
+      });
+
+  }, []);
+
+
+  /* Leave Room */
+  const handleLogout = useCallback(() => {
+    room.disconnect();
+    window.location.href = '/'
+  }, []);
+
 
   useEffect(() => {
     if (room) {

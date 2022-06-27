@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Participant from "./participant";
 
 interface Props {
@@ -8,12 +8,11 @@ interface Props {
 }
 
 const Room = ({ roomName, room, handleLogout }: Props) => {
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState<any[]>([]);
 
   useEffect(() => {
     /* Participant Connected */
     const participantConnected = (participant: any) => {
-      // @ts-ignore
       setParticipants((prevParticipants) => [...prevParticipants, participant]);
     };
 
