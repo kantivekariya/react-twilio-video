@@ -13,9 +13,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "twilio-video": "^2.2.0",
+    "react-toastify": "^9.0.5",
+    "twilio-video": "^2.21.1",
     "typescript": "^4.7.4",
     "util": "^0.12.4",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -43,6 +45,6 @@
     ]
   },
   "devDependencies": {
-    "@types/twilio-video": "^2.11.0"
+    "@types/uuid": "^8.3.4"
   }
 }

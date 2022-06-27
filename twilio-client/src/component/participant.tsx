@@ -1,34 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Participant = ({ participant }) => {
-  const [videoTracks, setVideoTracks] = useState([]);
-  const [audioTracks, setAudioTracks] = useState([]);
+const Participant = ({ participant }: any) => {
+  const [videoTracks, setVideoTracks] = useState<any>([]);
+  const [audioTracks, setAudioTracks] = useState<any>([]);
 
-  const videoRef = useRef();
-  const audioRef = useRef();
+  const videoRef = useRef() as React.MutableRefObject<HTMLVideoElement>;
+  const audioRef = useRef() as React.MutableRefObject<HTMLAudioElement>;
 
-  const trackpubsToTracks = (trackMap) =>
+  const trackPubsToTracks = (trackMap: any[]) =>
     Array.from(trackMap.values())
       .map((publication) => publication.track)
       .filter((track) => track !== null);
 
   useEffect(() => {
-    setVideoTracks(trackpubsToTracks(participant.videoTracks));
-    setAudioTracks(trackpubsToTracks(participant.audioTracks));
+    setVideoTracks(trackPubsToTracks(participant.videoTracks));
+    setAudioTracks(trackPubsToTracks(participant.audioTracks));
 
-    const trackSubscribed = (track) => {
+    const trackSubscribed = (track: { kind: string; }) => {
       if (track.kind === "video") {
-        setVideoTracks((videoTracks) => [...videoTracks, track]);
+        setVideoTracks((videoTracks: any) => [...videoTracks, track]);
       } else if (track.kind === "audio") {
-        setAudioTracks((audioTracks) => [...audioTracks, track]);
+        setAudioTracks((audioTracks: any) => [...audioTracks, track]);
       }
     };
 
-    const trackUnsubscribed = (track) => {
+    const trackUnsubscribed = (track: { kind: string; }) => {
       if (track.kind === "video") {
-        setVideoTracks((videoTracks) => videoTracks.filter((v) => v !== track));
+        setVideoTracks((videoTracks: any[]) => videoTracks.filter((v: { kind: string; }) => v !== track));
       } else if (track.kind === "audio") {
-        setAudioTracks((audioTracks) => audioTracks.filter((a) => a !== track));
+        setAudioTracks((audioTracks: any[]) => audioTracks.filter((a: { kind: string; }) => a !== track));
       }
     };
 

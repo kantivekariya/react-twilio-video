@@ -1,9 +1,24 @@
 import React, { useCallback, useEffect, useState } from "react";
-// @ts-ignore
-import Video from "twilio-video";
+import { v4 as uuidv4 } from "uuid";
+
+import {
+  connect,
+  LocalAudioTrack,
+  LocalDataTrack,
+  LocalVideoTrack,
+} from "twilio-video";
 import { baseUrl } from "../config/config";
 import Lobby from "./lobby";
 import Room from "./room";
+import { toast } from "react-toastify";
+
+const videoConstraints = {
+  audio: true,
+  video: {
+    width: 640,
+    height: 480,
+  },
+};
 
 const VideoChat = () => {
   const [username, setUsername] = useState("");
@@ -28,7 +43,7 @@ const VideoChat = () => {
   const handleSubmit = useCallback(
     async (event: { preventDefault: () => void }) => {
       event.preventDefault();
-      const data = await fetch(`${baseUrl}/rooms/join-room`, {
+      const accessToken = await fetch(`${baseUrl}/rooms/join-room`, {
         method: "POST",
         body: JSON.stringify({
           roomName: roomName,
@@ -37,20 +52,39 @@ const VideoChat = () => {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      Video.connect(data.token, {
-        name: roomName,
-      })
-        .then((room: any) => {
-          setConnecting(false);
-          setRoom(room);
-        })
-        .catch((err: any) => {
-          console.error(err);
-          setConnecting(false);
-        });
+      connectRoom(accessToken.token, roomName)
     },
-    [username, roomName]
+    [username, roomName,]
   );
+
+  const connectRoom = useCallback((accessToken: string, roomName: string) => {
+    navigator.mediaDevices
+      .getUserMedia(videoConstraints)
+      .then(async (stream) => {
+        let tracks;
+
+        /* create data track for messages */
+        const audioTrack = new LocalAudioTrack(stream.getAudioTracks()[0]);
+        const dataTrack = new LocalDataTrack();
+
+
+        let videoTrack;
+        videoTrack = new LocalVideoTrack(stream.getVideoTracks()[0]);
+        tracks = [audioTrack, videoTrack, dataTrack];
+
+        const room = await connect(accessToken, {
+          name: roomName,
+          tracks,
+        });
+        console.log("succesfully connected with twilio room");
+        console.log(room);
+        setRoom(room)
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+
+  }, [])
 
   const handleLogout = useCallback(() => {
     setRoom((prevRoom: { localParticipant: { tracks: { track: { stop: () => void; }; }[]; }; disconnect: () => void; }) => {
@@ -66,7 +100,7 @@ const VideoChat = () => {
 
   useEffect(() => {
     if (room) {
-      const tidyUp = (event:any) => {
+      const tidyUp = (event: any) => {
         if (event.persisted) {
           return;
         }
