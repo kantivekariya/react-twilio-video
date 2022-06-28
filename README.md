@@ -5,7 +5,7 @@ this is an example video chat application built with [Twilio Video](https://www.
 
 To run the application you will need a [Twilio account](https://www.twilio.com/try-twilio) and Node.js and npm installed.
 
-# clone Repo using ssh & Install dependencies:
+# clone Repo & Install dependencies:
 
 ```bash
 git clone git@github.com:kantivekariya/react-twilio-video.git
