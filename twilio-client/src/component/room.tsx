@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import Participant from "./participant";
+import LocalParticipants from "./localParticipant";
+import RemoteParticipant from "./remoteParticipant";
 
 interface Props {
   roomName: string;
   room: any;
-  handleLogout: (event: any) => void;
 }
 
-const Room = ({ roomName, room, handleLogout }: Props) => {
+const Room = ({ roomName, room }: Props) => {
   const [participants, setParticipants] = useState<any[]>([]);
 
   useEffect(() => {
@@ -33,26 +33,26 @@ const Room = ({ roomName, room, handleLogout }: Props) => {
   }, [room]);
 
   const remoteParticipants = participants.map((participant: { sid: any }) => (
-    <Participant key={participant.sid} participant={participant} />
+    <div className="joined">
+      <RemoteParticipant room={room} key={participant.sid} participant={participant} />
+    </div>
   ));
 
   return (
-    <div className="room">
-      <h2>Room: {roomName}</h2>
-      <button onClick={handleLogout}>End Call</button>
-      <div className="local-participant">
-        {room ? (
-          <Participant
+    <div className="container">
+      <div className="row">
+        {remoteParticipants}
+      </div>
+      <div className="row">
+        {room && (
+          <LocalParticipants
+            room={room}
             key={room.localParticipant.sid}
             participant={room.localParticipant}
           />
-        ) : (
-          ""
         )}
       </div>
-      <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
-    </div>
+    </div >
   );
 };
 

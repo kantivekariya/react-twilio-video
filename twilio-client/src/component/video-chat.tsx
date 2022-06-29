@@ -111,38 +111,11 @@ const VideoChat = () => {
 
   }, []);
 
-
-  /* Leave Room */
-  const handleLogout = useCallback(() => {
-    room.disconnect();
-    window.location.href = '/'
-  }, [room]);
-
-  useEffect(() => {
-    if (room) {
-      const tidyUp = (event: any) => {
-        if (event.persisted) {
-          return;
-        }
-        if (room) {
-          handleLogout();
-        }
-      };
-      window.addEventListener("pagehide", tidyUp);
-      window.addEventListener("beforeunload", tidyUp);
-      return () => {
-        window.removeEventListener("pagehide", tidyUp);
-        window.removeEventListener("beforeunload", tidyUp);
-      };
-    }
-  }, [room, handleLogout]);
-
   let render;
   if (room) {
     render = (
       <Room
         roomName={roomName}
-        handleLogout={handleLogout}
         room={room}
       />
     );

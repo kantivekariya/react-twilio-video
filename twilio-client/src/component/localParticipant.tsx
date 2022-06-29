@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const Participant = ({ participant }: any) => {
+const LocalParticipants = ({ participant, room }: any) => {
   const [videoTracks, setVideoTracks] = useState<any>([]);
   const [audioTracks, setAudioTracks] = useState<any>([]);
 
@@ -62,15 +62,31 @@ const Participant = ({ participant }: any) => {
     }
   }, [audioTracks]);
 
+  /* Leave Room */
+  console.log("room",room)
+  const handleLogout = useCallback(() => {
+    room.disconnect();
+    window.location.href = '/'
+  }, [room]);
+
   return (
-    <div className="participant">
-      <h3>{participant.identity}</h3>
-      <video ref={videoRef}
-        autoPlay={true}
-        muted={false} />
-      <audio ref={audioRef} autoPlay={true} muted={false} />
+    <div>
+      {/* <img src="https://i.postimg.cc/521rVkhD/image.png" className="host-img" alt="" /> */}
+      <div className="host-img">
+        <video style={{width: '94vw',}} ref={videoRef}
+          autoPlay={true}
+          muted={false} />
+        <audio ref={audioRef} autoPlay={true} muted={false} />
+      </div>
+      <div className="contarols">
+        <img src="https://i.postimg.cc/3NVtVtgf/chat.png" alt="" />
+        <img src="https://i.postimg.cc/BQPYHG0r/disconnect.png" alt="" />
+        <img src="https://i.postimg.cc/fyJH8G00/call.png" className="call-icon" alt="" onClick={handleLogout}/>
+        <img src="https://i.postimg.cc/bJFgSmFY/mic.png" alt="" />
+        <img src="https://i.postimg.cc/Y2sDvCJN/cast.png" alt="" />
+      </div>
     </div>
   );
 };
 
-export default Participant;
+export default LocalParticipants;
