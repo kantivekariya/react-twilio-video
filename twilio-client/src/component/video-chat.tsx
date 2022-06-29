@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 import {
   connect,
@@ -10,7 +9,6 @@ import {
 import { baseUrl } from "../config/config";
 import Lobby from "./lobby";
 import Room from "./room";
-import { toast } from "react-toastify";
 
 const videoConstraints = {
   audio: true,
@@ -29,7 +27,6 @@ const VideoChat = () => {
   const [username, setUsername] = useState("");
   const [roomName, setRoomName] = useState("");
   const [room, setRoom] = useState<any>(null);
-  const [connecting, setConnecting] = useState(false);
 
   const handleUsernameChange = useCallback(
     (event: { target: { value: React.SetStateAction<string> } }) => {
@@ -104,7 +101,6 @@ const VideoChat = () => {
           name: roomName,
           tracks,
         });
-        console.log(room);
         setRoom(room);
         // store.dispatch(setShowOverlay(false));
       })
@@ -120,8 +116,7 @@ const VideoChat = () => {
   const handleLogout = useCallback(() => {
     room.disconnect();
     window.location.href = '/'
-  }, []);
-
+  }, [room]);
 
   useEffect(() => {
     if (room) {
