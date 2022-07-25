@@ -9,17 +9,17 @@ h2 {
   text-align: center;
 }
 
-form>div {
+form > div {
   width: 100%;
   margin-bottom: 1em;
 }
 
-form>div>label {
+form > div > label {
   display: block;
   margin-bottom: 0.3em;
 }
 
-form>div>input {
+form > div > input {
   display: block;
   width: 100%;
   font-size: 16px;
@@ -51,19 +51,16 @@ button:hover {
   width: 25px;
   margin-left: 40px;
   cursor: pointer;
-
 }
 
 .row {
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
-
 }
 
 .col-1 {
   flex-basis: 65%;
-
 }
 
 .col-2 {
@@ -71,8 +68,12 @@ button:hover {
 }
 
 .host-img {
-  width: 100%;
+  height: calc(100vh - 266px);
+  width: 89vw;
+  background: #182842;
   border-radius: 15px;
+  padding: 30px 40px 50px;
+  color: #fff;
 }
 
 .contarols {
@@ -90,20 +91,22 @@ button:hover {
 
 .contarols .call-icon {
   width: 70px;
-
 }
 
 .contarols img:hover {
   transform: translateY(-10px);
-
 }
 
 .joined {
-  background: #182842;
+  position: absolute;
+  height: 121px;
+  width: 104px;
+  right: 44px;
+  top: 37px;
+  background: gray;
   border-radius: 15px;
   padding: 30px 40px 50px;
   color: #fff;
-
 }
 
 .joined div {
@@ -111,14 +114,12 @@ button:hover {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 20px;
-
 }
 
 .joined img {
   width: 100%;
   border-radius: 10px;
   cursor: pointer;
-
 }
 
 .invite {
@@ -127,7 +128,6 @@ button:hover {
   padding: 30px 40px 50px;
   color: #fff;
   margin-top: 20px;
-
 }
 
 .invite img {

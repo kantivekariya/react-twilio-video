@@ -64,7 +64,7 @@ const RemoteParticipant = ({ participant }: any) => {
 
   return (
     <>
-      <div>
+      <div style={{ height: "94px", width: "94px" }}>
         <video ref={videoRef}
           autoPlay={true}
           muted={false} />

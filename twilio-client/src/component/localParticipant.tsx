@@ -16,7 +16,7 @@ const LocalParticipants = ({ participant, room }: any) => {
     setVideoTracks(trackPubsToTracks(participant.videoTracks));
     setAudioTracks(trackPubsToTracks(participant.audioTracks));
 
-    const trackSubscribed = (track: { kind: string; }) => {
+    const trackSubscribed = (track: { kind: string }) => {
       if (track.kind === "video") {
         setVideoTracks((videoTracks: any) => [...videoTracks, track]);
       } else if (track.kind === "audio") {
@@ -24,11 +24,15 @@ const LocalParticipants = ({ participant, room }: any) => {
       }
     };
 
-    const trackUnsubscribed = (track: { kind: string; }) => {
+    const trackUnsubscribed = (track: { kind: string }) => {
       if (track.kind === "video") {
-        setVideoTracks((videoTracks: any[]) => videoTracks.filter((v: { kind: string; }) => v !== track));
+        setVideoTracks((videoTracks: any[]) =>
+          videoTracks.filter((v: { kind: string }) => v !== track)
+        );
       } else if (track.kind === "audio") {
-        setAudioTracks((audioTracks: any[]) => audioTracks.filter((a: { kind: string; }) => a !== track));
+        setAudioTracks((audioTracks: any[]) =>
+          audioTracks.filter((a: { kind: string }) => a !== track)
+        );
       }
     };
 
@@ -63,25 +67,33 @@ const LocalParticipants = ({ participant, room }: any) => {
   }, [audioTracks]);
 
   /* Leave Room */
-  console.log("room",room)
+  console.log("room", room);
   const handleLogout = useCallback(() => {
     room.disconnect();
-    window.location.href = '/'
+    window.location.href = "/";
   }, [room]);
 
   return (
     <div>
       {/* <img src="https://i.postimg.cc/521rVkhD/image.png" className="host-img" alt="" /> */}
       <div className="host-img">
-        <video style={{width: '94vw',}} ref={videoRef}
+        <video
+          style={{ height: "94px", width: "94px" }}
+          ref={videoRef}
           autoPlay={true}
-          muted={false} />
+          muted={false}
+        />
         <audio ref={audioRef} autoPlay={true} muted={false} />
       </div>
       <div className="contarols">
         <img src="https://i.postimg.cc/3NVtVtgf/chat.png" alt="" />
         <img src="https://i.postimg.cc/BQPYHG0r/disconnect.png" alt="" />
-        <img src="https://i.postimg.cc/fyJH8G00/call.png" className="call-icon" alt="" onClick={handleLogout}/>
+        <img
+          src="https://i.postimg.cc/fyJH8G00/call.png"
+          className="call-icon"
+          alt=""
+          onClick={handleLogout}
+        />
         <img src="https://i.postimg.cc/bJFgSmFY/mic.png" alt="" />
         <img src="https://i.postimg.cc/Y2sDvCJN/cast.png" alt="" />
       </div>
