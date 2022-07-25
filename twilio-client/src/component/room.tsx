@@ -34,16 +34,18 @@ const Room = ({ roomName, room }: Props) => {
 
   const remoteParticipants = participants.map((participant: { sid: any }) => (
     <div className="joined">
-      <RemoteParticipant room={room} key={participant.sid} participant={participant} />
+      <RemoteParticipant
+        room={room}
+        key={participant.sid}
+        participant={participant}
+      />
     </div>
   ));
 
   return (
-    <div className="container">
-      <div className="row">
-        {remoteParticipants}
-      </div>
-      <div className="row">
+    <>
+      <div>{remoteParticipants}</div>
+      <div>
         {room && (
           <LocalParticipants
             room={room}
@@ -52,7 +54,7 @@ const Room = ({ roomName, room }: Props) => {
           />
         )}
       </div>
-    </div >
+    </>
   );
 };
 

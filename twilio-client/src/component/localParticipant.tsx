@@ -78,7 +78,6 @@ const LocalParticipants = ({ participant, room }: any) => {
       {/* <img src="https://i.postimg.cc/521rVkhD/image.png" className="host-img" alt="" /> */}
       <div className="host-img">
         <video
-          style={{ height: "94px", width: "94px" }}
           ref={videoRef}
           autoPlay={true}
           muted={false}

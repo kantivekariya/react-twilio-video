@@ -16,7 +16,7 @@ const RemoteParticipant = ({ participant }: any) => {
     setVideoTracks(trackPubsToTracks(participant.videoTracks));
     setAudioTracks(trackPubsToTracks(participant.audioTracks));
 
-    const trackSubscribed = (track: { kind: string; }) => {
+    const trackSubscribed = (track: { kind: string }) => {
       if (track.kind === "video") {
         setVideoTracks((videoTracks: any) => [...videoTracks, track]);
       } else if (track.kind === "audio") {
@@ -24,11 +24,15 @@ const RemoteParticipant = ({ participant }: any) => {
       }
     };
 
-    const trackUnsubscribed = (track: { kind: string; }) => {
+    const trackUnsubscribed = (track: { kind: string }) => {
       if (track.kind === "video") {
-        setVideoTracks((videoTracks: any[]) => videoTracks.filter((v: { kind: string; }) => v !== track));
+        setVideoTracks((videoTracks: any[]) =>
+          videoTracks.filter((v: { kind: string }) => v !== track)
+        );
       } else if (track.kind === "audio") {
-        setAudioTracks((audioTracks: any[]) => audioTracks.filter((a: { kind: string; }) => a !== track));
+        setAudioTracks((audioTracks: any[]) =>
+          audioTracks.filter((a: { kind: string }) => a !== track)
+        );
       }
     };
 
@@ -64,10 +68,8 @@ const RemoteParticipant = ({ participant }: any) => {
 
   return (
     <>
-      <div style={{ height: "94px", width: "94px" }}>
-        <video ref={videoRef}
-          autoPlay={true}
-          muted={false} />
+      <div>
+        <video ref={videoRef} autoPlay={true} muted={false} />
         <audio ref={audioRef} autoPlay={true} muted={false} />
       </div>
     </>

@@ -42,11 +42,6 @@ button:hover {
   filter: brightness(150%);
 }
 
-.container {
-  padding: 0 2.5%;
-  position: relative;
-}
-
 .top-icons img {
   width: 25px;
   margin-left: 40px;
@@ -68,12 +63,17 @@ button:hover {
 }
 
 .host-img {
-  height: calc(100vh - 266px);
-  width: 89vw;
+  height: calc(100vh - 100px);
+  width: auto;
   background: #182842;
   border-radius: 15px;
-  padding: 30px 40px 50px;
   color: #fff;
+}
+
+.host-img video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .contarols {
@@ -99,21 +99,30 @@ button:hover {
 
 .joined {
   position: absolute;
-  height: 121px;
-  width: 104px;
-  right: 44px;
+  height: 139px;
+  width: 143px;
+  right: 54px;
   top: 37px;
   background: gray;
   border-radius: 15px;
-  padding: 30px 40px 50px;
+  padding: 0px 0px 26px;
   color: #fff;
 }
 
+.joined video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .joined div {
-  margin-top: 20px;
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-gap: 20px;
+  grid-gap: 0;
+  width: 149px;
+  height: 166px;
+  border-radius: 0px;
 }
 
 .joined img {
